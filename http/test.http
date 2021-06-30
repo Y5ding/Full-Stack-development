@@ -3,7 +3,7 @@ GET http://localhost:8080/hello
 
 > {% client.test("test-hello",function(){
 client.log(response.body);
-client.assert(response.body=="Hello World First","Validation fails")
+//client.assert(response.body=="Hello World First1","Validation fails")
 }); //module test
 %}
 ###
