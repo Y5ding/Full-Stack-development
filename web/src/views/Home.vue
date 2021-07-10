@@ -8,7 +8,7 @@
           :style="{ height: '100%', borderRight: 0 }"
       >
         <a-sub-menu key="sub1">
-          <span slot="title"><a-icon type="user" />subnav 1111</span>
+          <span slot="title"><a-icon type="user" />subnav 1</span>
           <a-menu-item key="1">
             option1
           </a-menu-item>
@@ -61,15 +61,3 @@
     </a-layout-content>
   </a-layout>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
-});
-</script>

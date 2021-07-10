@@ -19,12 +19,25 @@
         </a-menu-item>
       </a-menu>
     </a-layout-header>
+    <the-header></the-header>
     <router-view/>
     <a-layout-footer style="text-align: center">
       Spring Boot + Vue 3
     </a-layout-footer>
   </a-layout>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import TheHeader from '@/components/the-header.vue'; // @ is an alias to /src
+
+export default defineComponent({
+  name: 'app',
+  components: {
+    TheHeader,
+  },
+});
+</script>
 
 <style>
 #components-layout-demo-top-side-2 .logo {
