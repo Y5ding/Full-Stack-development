@@ -1,9 +1,7 @@
 <template>
-  <a-layout id="components-layout-demo-top-side-2">
+  <a-layout>
     <the-header></the-header>
-    <a-layout>
-      <router-view/>
-    </a-layout>
+    <router-view/>
     <the-end></the-end>
   </a-layout>
 </template>
@@ -12,6 +10,7 @@
 import { defineComponent } from 'vue';
 import TheHeader from '@/components/the-header.vue';
 import TheEnd from '@/components/the-end.vue';
+
 export default defineComponent({
   name: 'app',
   components: {
@@ -23,11 +22,20 @@ export default defineComponent({
 
 <style>
 #components-layout-demo-top-side-2 .logo {
+  float: left;
   width: 120px;
   height: 31px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px 28px 16px 0;
-  float: left;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top-side-2 .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.site-layout-background {
+  background: #fff;
 }
 </style>
 
