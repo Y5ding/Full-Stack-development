@@ -7,6 +7,7 @@ import com.yujia.wiki_spring.req.Ebookreq;
 import com.yujia.wiki_spring.resp.EbookQueryResp;
 import com.yujia.wiki_spring.util.CopyUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +21,10 @@ public class EbookService {
     public List<EbookQueryResp> list(Ebookreq req){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria=ebookExample.createCriteria();
+        // dynamic SQL
+        if(!ObjectUtils.isEmpty(req.getName())) {
         criteria.andNameLike("%"+req.getName()+"%");
+        }
         List<Ebook> ebookList=newEbook.selectByExample(ebookExample);
 
         /*List<EbookQueryResp> respList=new ArrayList<>();
