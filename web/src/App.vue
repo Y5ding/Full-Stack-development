@@ -1,7 +1,9 @@
 <template>
   <a-layout id="components-layout-demo-top-side-2">
     <the-header></the-header>
-    <router-view/>
+    <a-layout>
+      <router-view/>
+    </a-layout>
     <the-end></the-end>
   </a-layout>
 </template>

@@ -1,12 +1,12 @@
 <template>
-  <a-layout>
-    <a-layout-sider width="200" style="background: #fff">
+  <div>
+     <a-layout-sider width="200" style="background: #fff">
         <a-menu
             mode="inline"
             :style="{width: '256px'}"
         >
           <a-sub-menu key="sub1">
-            <span slot="title"><a-icon type="mail" /><span>Navigation One</span></span>
+            <span slot="title"><span>Navigation One</span></span>
             <a-menu-item key="1">
               Option 11
             </a-menu-item>
@@ -21,7 +21,7 @@
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
-            <span slot="title"><a-icon type="appstore" /><span>Navigation Two</span></span>
+            <span slot="title"><span>Navigation Two</span></span>
             <a-menu-item key="5">
               Option 5
             </a-menu-item>
@@ -38,7 +38,7 @@
             </a-sub-menu>
           </a-sub-menu>
           <a-sub-menu key="sub4">
-            <span slot="title"><a-icon type="setting" /><span>Navigation Three</span></span>
+            <span slot="title"><span>Navigation Three</span></span>
             <a-menu-item key="9">
               Option 9
             </a-menu-item>
@@ -49,26 +49,36 @@
               Option 11
             </a-menu-item>
             <a-menu-item key="12">
-              Option 12
+              Option 15
             </a-menu-item>
           </a-sub-menu>
         </a-menu>
     </a-layout-sider>
-    <a-layout-content
+     <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-      Content 33
+      <pre>
+        {{ebook}}}
+      </pre>
     </a-layout-content>
-  </a-layout>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted,ref} from 'vue';
 import axios from 'axios';
 export default defineComponent({
   name: 'home',
   setup(){
-    console.log("set up");
-    axios.get("http://localhost:8080/ebook/list?name=Java").then(function (response){console.log(response);})
+    const ebook= ref();
+    onMounted(()=>{
+      console.log("onMounted");
+      axios.get("http://localhost:8080/ebook/list?name=Java").then(function (response){
+        const data = response.data;
+        ebook.value=data.content;
+        console.log(response);
+      });
+    })
+    return {ebook}
   }
 });
 </script>
