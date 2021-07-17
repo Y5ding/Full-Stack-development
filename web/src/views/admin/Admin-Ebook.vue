@@ -14,9 +14,6 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar" />
         </template>
-        <template v-slot:category="{ text, record }">
-          <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
-        </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
               <a-button type="primary">
