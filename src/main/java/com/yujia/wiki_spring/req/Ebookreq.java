@@ -1,6 +1,6 @@
 package com.yujia.wiki_spring.req;
 
-public class Ebookreq {
+public class Ebookreq extends PageReq {
     private Long id;
 
     private String name;

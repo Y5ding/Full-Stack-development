@@ -7,6 +7,7 @@ import com.yujia.wiki_spring.domain.EbookExample;
 import com.yujia.wiki_spring.mapper.EbookMapper;
 import com.yujia.wiki_spring.req.Ebookreq;
 import com.yujia.wiki_spring.resp.EbookQueryResp;
+import com.yujia.wiki_spring.resp.PageResp;
 import com.yujia.wiki_spring.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +23,14 @@ public class EbookService {
     @Resource
     private EbookMapper newEbook;
     private static final Logger log = LoggerFactory.getLogger( EbookService.class );
-    public List<EbookQueryResp> list(Ebookreq req){
+    public PageResp<EbookQueryResp> list(Ebookreq req){
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria=ebookExample.createCriteria();
         // dynamic SQL
         if(!ObjectUtils.isEmpty(req.getName())) {
         criteria.andNameLike("%"+req.getName()+"%");
         }
-        PageHelper.startPage(1,3); // only useful to first select
+        PageHelper.startPage(req.getPage(), req.getSize()); // only useful to first select
         List<Ebook> ebookList=newEbook.selectByExample(ebookExample);
 
         PageInfo<Ebook> pageInfo =new PageInfo<>(ebookList);
@@ -46,7 +47,11 @@ public class EbookService {
             respList.add(queryResp);
         }*/
         List<EbookQueryResp> respList = CopyUtil.copyList(ebookList, EbookQueryResp.class);
-        return respList;
+        PageResp<EbookQueryResp> pageResp = new PageResp<>();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(respList);
+
+        return pageResp;
         
     }
 }
