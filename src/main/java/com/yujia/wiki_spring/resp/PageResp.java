@@ -26,9 +26,11 @@ public class PageResp<T> {
 
     @Override
     public String toString() {
-        return "PageResp{" +
-                "total=" + total +
-                ", list=" + list +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("PageResp{");
+        sb.append("total=").append(total);
+        sb.append(", list=").append(list);
+        sb.append('}');
+        return sb.toString();
     }
 }
