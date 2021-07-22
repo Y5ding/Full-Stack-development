@@ -1,13 +1,12 @@
 package com.yujia.wiki_spring.controller;
 
+import com.yujia.wiki_spring.req.EbookSaveReq;
 import com.yujia.wiki_spring.req.Ebookreq;
 import com.yujia.wiki_spring.resp.CommonResp;
 import com.yujia.wiki_spring.resp.EbookQueryResp;
 import com.yujia.wiki_spring.resp.PageResp;
 import com.yujia.wiki_spring.service.EbookService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -23,6 +22,13 @@ public class EbookController {
         CommonResp<PageResp<EbookQueryResp>> respond = new CommonResp<>();
         PageResp<EbookQueryResp> list=ebookService.list(req);
         respond.setContent(list);
+        return respond;
+    }
+
+    @PostMapping("/save")
+    public CommonResp save(@RequestBody EbookSaveReq req){
+        CommonResp respond = new CommonResp<>();
+        ebookService.save(req);
         return respond;
     }
 }

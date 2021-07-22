@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.yujia.wiki_spring.domain.Ebook;
 import com.yujia.wiki_spring.domain.EbookExample;
 import com.yujia.wiki_spring.mapper.EbookMapper;
+import com.yujia.wiki_spring.req.EbookSaveReq;
 import com.yujia.wiki_spring.req.Ebookreq;
 import com.yujia.wiki_spring.resp.EbookQueryResp;
 import com.yujia.wiki_spring.resp.PageResp;
@@ -53,5 +54,14 @@ public class EbookService {
 
         return pageResp;
         
+    }
+    public void save(EbookSaveReq req){
+        Ebook ebook=CopyUtil.copy(req,Ebook.class);
+        if(ObjectUtils.isEmpty(req.getId())){
+            //
+            newEbook.insert(ebook);
+        }else{
+            newEbook.updateByPrimaryKey(ebook);
+        }
     }
 }
