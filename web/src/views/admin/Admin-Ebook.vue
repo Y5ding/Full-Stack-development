@@ -19,9 +19,16 @@
               <a-button type="primary" @click="edit(record)">
                 edit
               </a-button>
-            <a-button type="danger">
-              delete
-            </a-button>
+            <a-popconfirm
+                title="删除后不可恢复，确认删除?"
+                ok-text="是"
+                cancel-text="否"
+                @confirm="del(record.id)"
+            >
+             <a-button type="danger">
+                 delete
+             </a-button>
+            </a-popconfirm>
           </a-space>
         </template>
       </a-table>
@@ -55,6 +62,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
+import { message } from 'ant-design-vue';
 import axios from 'axios';
 
 export default defineComponent({
@@ -63,7 +71,7 @@ export default defineComponent({
     const ebooks = ref();
     const pagination = ref({
       current: 1,
-      pageSize: 10,
+      pageSize: 100,
       total: 0
     });
     const loading = ref(false);
@@ -113,10 +121,14 @@ export default defineComponent({
       }).then((response) => {
         loading.value = false;
         const data = response.data;
+        if (data.success) {
           ebooks.value = data.content.list;
           //reset pagination
           pagination.value.current = params.page;
           pagination.value.total = data.content.total;
+        }else {
+          message.error(data.message);
+        }
       });
     };
 
@@ -154,6 +166,17 @@ export default defineComponent({
        modalVisible.value = true;
        ebook.value=record
      }
+    const del=(id:number) => {
+      axios.delete("/ebook/delete/" + id).then((response) => {
+        const data = response.data; // data = commonResp
+        if (data.success) {
+          handleQuery({
+            page: pagination.value.current,
+            size: pagination.value.pageSize,
+          });
+        }
+      });
+    };
 
     onMounted(() => {
       handleQuery({
@@ -173,6 +196,7 @@ export default defineComponent({
       modalVisible,
       handleModalOk,
       ebook,
+      del,
 
     }
   }

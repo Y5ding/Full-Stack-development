@@ -23,18 +23,19 @@ public class EbookService {
 
     @Resource
     private EbookMapper newEbook;
-    private static final Logger log = LoggerFactory.getLogger( EbookService.class );
-    public PageResp<EbookQueryResp> list(Ebookreq req){
+    private static final Logger log = LoggerFactory.getLogger(EbookService.class);
+
+    public PageResp<EbookQueryResp> list(Ebookreq req) {
         EbookExample ebookExample = new EbookExample();
-        EbookExample.Criteria criteria=ebookExample.createCriteria();
+        EbookExample.Criteria criteria = ebookExample.createCriteria();
         // dynamic SQL
-        if(!ObjectUtils.isEmpty(req.getName())) {
-        criteria.andNameLike("%"+req.getName()+"%");
+        if (!ObjectUtils.isEmpty(req.getName())) {
+            criteria.andNameLike("%" + req.getName() + "%");
         }
         PageHelper.startPage(req.getPage(), req.getSize()); // only useful to first select
-        List<Ebook> ebookList=newEbook.selectByExample(ebookExample);
+        List<Ebook> ebookList = newEbook.selectByExample(ebookExample);
 
-        PageInfo<Ebook> pageInfo =new PageInfo<>(ebookList);
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebookList);
         log.info("rows: {}", pageInfo.getTotal());
         log.info("pages: {}", pageInfo.getPages());
 
@@ -53,15 +54,20 @@ public class EbookService {
         pageResp.setList(respList);
 
         return pageResp;
-        
+
     }
-    public void save(EbookSaveReq req){
-        Ebook ebook=CopyUtil.copy(req,Ebook.class);
-        if(ObjectUtils.isEmpty(req.getId())){
+
+    public void save(EbookSaveReq req) {
+        Ebook ebook = CopyUtil.copy(req, Ebook.class);
+        if (ObjectUtils.isEmpty(req.getId())) {
             //
             newEbook.insert(ebook);
-        }else{
+        } else {
             newEbook.updateByPrimaryKey(ebook);
         }
+    }
+
+    public void delete(Long id) {
+        newEbook.deleteByPrimaryKey(id);
     }
 }

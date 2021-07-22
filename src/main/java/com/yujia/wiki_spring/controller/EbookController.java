@@ -9,6 +9,7 @@ import com.yujia.wiki_spring.service.EbookService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @RestController //return string or JSON object
 //@Controller return pages
@@ -18,7 +19,7 @@ public class EbookController {
     private EbookService ebookService; // input EbookService
 
     @GetMapping("/list")
-    public CommonResp list(Ebookreq req){
+    public CommonResp list(@Valid Ebookreq req){
         CommonResp<PageResp<EbookQueryResp>> respond = new CommonResp<>();
         PageResp<EbookQueryResp> list=ebookService.list(req);
         respond.setContent(list);
@@ -29,6 +30,12 @@ public class EbookController {
     public CommonResp save(@RequestBody EbookSaveReq req){
         CommonResp respond = new CommonResp<>();
         ebookService.save(req);
+        return respond;
+    }
+    @DeleteMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable Long id){
+        CommonResp respond = new CommonResp<>();
+        ebookService.delete(id);
         return respond;
     }
 }
